@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect
 from modules.URLConverter import URLConverter
 import random
 import string
+import os
+
 app = Flask(__name__)
 
 log = []
@@ -27,8 +29,12 @@ def env():
 
 @app.route('/env-2')
 def env_2():
-    test = request.environ.get('test', 'default_value')
+    test = os.environ.get('test', 'default_value')
     return f"test={test}"
+
+@app.route('/env-3')
+def env_3():
+    return "".join(f"{key}={value}" for key, value in sorted(os.environ.items()))
 
 @app.route('/shorten')
 def shorten():
