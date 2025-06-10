@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen ">
+    <div class="bg-white shadow-xl rounded-2xl p-10 max-w-md w-full text-center space-y-6">
+        <h1 class="text-4xl font-extrabold text-gray-800">URL shortener</h1>
+        <div class="flex flex-col justify-center gap-4">
+            <button id="random-link" class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-xl shadow-md transition-transform transform hover:scale-105"
+                href="#">Random link</button>
+            <button id="custom-link"  class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-xl shadow-md transition-transform transform hover:scale-105"
+                href="#">Custom link</button>
+        </div>
+        <div class="hidden" id="link-display">
+            <h1>Your link: </h1>
+            <h2 id="link"></h2>
+        </div>
+    </div>
+
+    <div id="randomModal" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 hidden flex items-center justify-center">
+        <div class="bg-white p-6 rounded shadow-md">
+            <h2 class="text-lg font-semibold mb-4">Create Random Link</h2>
+            <input type="text" id="randomUrl" placeholder="Your URL" class="border p-2 mb-4 w-full">
+            <div class="flex justify-end">
+                <button id="generateRandom" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Create</button>
+                <button id="closeRandomModal" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="customModal" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 hidden flex items-center justify-center">
+        <div class="bg-white p-6 rounded shadow-md">
+            <h2 class="text-lg font-semibold mb-4">Create Custom Link</h2>
+            <input type="text" id="customUrl" placeholder="Your URL" class="border p-2 mb-4 w-full">
+            <input type="text" id="customSubpath" placeholder="Your custom subpath" class="border p-2 mb-4 w-full">
+            <div class="flex justify-end">
+                <button id="createCustom" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">Create</button>
+                <button id="closeCustomModal" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('random-link').addEventListener('click', function() {
+    document.getElementById('randomModal').classList.remove('hidden');
+});
+
+document.getElementById('custom-link').addEventListener('click', function() {
+    document.getElementById('customModal').classList.remove('hidden');
+});
+
+document.getElementById('closeRandomModal').addEventListener('click', function() {
+    document.getElementById('randomModal').classList.add('hidden');
+});
+
+document.getElementById('closeCustomModal').addEventListener('click', function() {
+    document.getElementById('customModal').classList.add('hidden');
+});
+
+document.getElementById('generateRandom').addEventListener('click', function() {
+    const url = document.getElementById('randomUrl').value;
+    let random_url = ''
+    fetch('/shorten', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `url=${encodeURIComponent(url)}`
+    }).then(response => response.json())
+    .then(data => {
+        random_url = data.random_url;
+        document.getElementById('randomModal').classList.add('hidden');
+        document.getElementById('link').textContent = random_url;
+        document.getElementById('link-display').classList.remove('hidden');
+        document.getElementById('link').classList.remove('hidden');
+        document.getElementById('link').classList.add('text-blue-600', 'font-bold');
+        document.getElementById('link').setAttribute('href', random_url);
+        document.getElementById('link').setAttribute('target', '_blank');
+        document.getElementById('link').innerHTML = `<a href="${random_url}" class="text-blue-600 font-bold">${random_url}</a>`;   
+    }).catch(error => {
+        console.error('Error:', error);
+    });
+    
+    
+});
+
+document.getElementById('createCustom').addEventListener('click', function() {
+    const customUrl = document.getElementById('customUrl').value;
+    const customSubpath = document.getElementById('customSubpath').value;
+    let custom_url = ''
+    fetch('/custom_shorten', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `url=${encodeURIComponent(customUrl)}&custom_short_url=${encodeURIComponent(customSubpath)}`
+    }).then(response => response.json())
+    .then(data => {
+        custom_url = data.custom_url;
+        document.getElementById('customModal').classList.add('hidden');
+        document.getElementById('link').textContent = custom_url;
+        document.getElementById('link-display').classList.remove('hidden');
+        document.getElementById('link').classList.remove('hidden');
+        document.getElementById('link').classList.add('text-green-600', 'font-bold');
+        document.getElementById('link').setAttribute('href', custom_url);
+        document.getElementById('link').setAttribute('target', '_blank');
+        document.getElementById('link').innerHTML = `<a href="${custom_url}" class="text-green-600 font-bold">${custom_url}</a>`;   
+    }).catch(error => {
+        alert("Subpath already exists, please try another one.");
+        console.error('Error:', error);
+    });
+});
+</script>
+
+{% endblock %}

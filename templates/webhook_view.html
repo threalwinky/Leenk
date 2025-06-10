@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Webhook Logs
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen">
+  <div class="bg-white shadow-xl rounded-2xl p-8 max-w-2xl w-full">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Webhook Logs</h1>
+    <div class="flex gap-1 flex-col">
+        <div class="flex gap-2 w-full">
+            <h2 class="text-gray-600 text-lg text-left w-full">
+              <label class="font-bold">Your webhook URL: </label>
+              <a
+              id="webhook_url"
+                class="text-blue-600 w-full break-all"
+                href={{webhook_url}}
+              >{{ webhook_url }}
+              </a>
+            </h2>
+          </div>
+    </div>
+    <div class="max-h-96 overflow-y-auto border border-gray-300 rounded p-4 font-mono text-gray-600 text-left">
+      <ul class="space-y-2">
+        {% for log in logs %}
+          {% set parts = log.split(' accessed at ') %}
+          <li class="flex flex-col">
+            <span class="font-semibold text-gray-800">{{ parts[0] }}</span>
+            <span class="text-sm text-gray-500">{{ parts[1] }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

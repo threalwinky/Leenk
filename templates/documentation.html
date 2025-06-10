@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen ">
+    <div class="bg-white shadow-xl rounded-2xl p-10 max-w-md w-full text-center space-y-6">
+        <h1 class="text-3xl font-extrabold text-gray-800">Documentation</h1>
+        <div class="flex gap-2">
+            <h2 class="text-gray-600 text-lg font-bold">URL shortener</h2>
+        <p class="text-gray-600 text-lg">Generated at <a class="text-blue-600" href="/url-shortener">/url-shortener</a></p>
+        </div>
+        <div class="flex gap-1 flex-col">
+            <div class="gap-2 flex">
+                <h2 class="text-gray-600 text-lg font-bold">Redirect</h2>
+                <p class="text-gray-600 text-lg">Use <a class="text-blue-600" href="/redirect">/redirect</a></p>
+            </div>
+            <div class="flex gap-2">
+                <h2 class="text-gray-600 text-lg text-left"><label class="font-bold">Format: </label> <a class="text-blue-600" href="#">https://leenk.vercel.app/redirect?url=&lt;url&gt;&code=&lt;code&gt;&mode=&lt;mode&gt;&shift=&lt;shift&gt;</a></h2>
+            </div>
+            <div class="flex gap-2">
+                <h2 class="text-gray-600 text-lg text-left"><label class="font-bold">Possible code: </label>301, 302, 303, 307, 308, blank</a></h2>
+            </div>
+            <div class="flex gap-2">
+                <h2 class="text-gray-600 text-lg text-left"><label class="font-bold">Possible mode: </label>b64(base64), bin(binary), hex(hexadecimal), oct(octal), csr(caesar cipher) , blank(default)</a></h2>
+            </div>
+            <div class="flex gap-2">
+                <h2 class="text-gray-600 text-lg text-left"><label class="font-bold">Possible shift for caesar cipher: </label>integers , blank(default is 13)</a></h2>
+            </div>
+            <div class="flex gap-2 w-full">
+                <h2 class="text-gray-600 text-lg text-left w-full">
+                  <label class="font-bold">Example: </label>
+                  <a
+                    class="text-blue-600 w-full break-all"
+                    href="https://leenk.vercel.app/redirect?url=aHR0cHM6Ly9leGFtcGxlLmNvbQ&code=307&mode=b64"
+                  >
+                    https://leenk.vercel.app/redirect?url=aHR0cHM6Ly9leGFtcGxlLmNvbQ&code=307&mode=b64 <label class="text-gray-600">(redirects to https://example.com)</label>
+                  </a>
+                </h2>
+              </div>
+        </div>
+        
+        <div class="flex gap-2">
+            <h2 class="text-gray-600 text-lg font-bold">Webhook</h2>
+        <p class="text-gray-600 text-lg">Used at <a class="text-blue-600" href="/webhook">/webhook</a></p>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

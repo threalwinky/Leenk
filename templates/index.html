@@ -1,5 +1,24 @@
 {% extends 'base.html' %}
 
+{% block title %}
+Home
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
+
 {% block content %}
-hello world
+<div class="flex items-center justify-center min-h-screen ">
+    <div class="bg-white shadow-xl rounded-2xl p-10 max-w-md w-full text-center space-y-6">
+        <h1 class="text-4xl font-extrabold text-gray-800">Leenk</h1>
+        <p class="text-gray-600 text-lg">A fast, simple, secure URL handler</p>
+        <div class="flex justify-center gap-4">
+            <a class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-xl shadow-md transition-transform transform hover:scale-105"
+                href="/dashboard">Try it out!</a>
+            <a class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-xl shadow-md transition-transform transform hover:scale-105"
+                href="/documentation">How to use?</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

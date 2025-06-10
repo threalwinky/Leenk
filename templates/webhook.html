@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-xl rounded-2xl p-10 max-w-md w-full text-center space-y-6">
+        <h1 class="text-4xl font-extrabold text-gray-800">Webhook</h1>
+        <!-- <div class="flex">
+            <h2 class="text-left">
+                Your webhook URL:
+                <label class="text-blue-600 font-semibold">
+                    <a id="webhook_url" href="">hihi</a>
+                </label>
+            </h2>
+        </div>
+        <button>
+            <a id="webhook_view_url" href="">Manage your webhook logs</a>
+        </button> -->
+        <div class="flex gap-1 flex-col">
+            <div class="flex gap-2 w-full">
+                <h2 class="text-gray-600 text-lg text-left w-full">
+                  <label class="font-bold">Your webhook URL: </label>
+                  <a
+                  id="webhook_url"
+                    class="text-blue-600 w-full break-all"
+                    href=""
+                  >
+                  </a>
+                </h2>
+              </div>
+        </div>
+        <button>
+            <a id="webhook_view_url" class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-xl shadow-md transition-transform transform hover:scale-105" href="">Manage your webhook logs </a>
+        </button> 
+        
+    </div>
+    
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('/webhook/create_webhook', {
+            method: 'POST',
+        })
+            .then((r) => r.json())
+            .then((data) => {
+                const webhookUrl = document.getElementById('webhook_url');
+                webhookUrl.href = data.webhook_url;
+                webhookUrl.textContent = data.webhook_url;
+
+                const webhookViewUrl = document.getElementById('webhook_view_url');
+                webhookViewUrl.href = data.webhook_view_url;
+                webhookViewUrl.textContent = 'Manage your webhook logs';
+            });
+    });
+</script>
+{% endblock %}
