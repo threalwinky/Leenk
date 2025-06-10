@@ -5,6 +5,7 @@ import string
 import os
 import datetime
 from modules.Webhook import Webhook
+import time
 
 app = Flask(__name__)
 
@@ -113,6 +114,7 @@ def webhook_index():
 def create_webhook():
     webhook_id = ''.join(random.choices(string.ascii_letters + string.digits, k=20))
     webhook.create_webhook(webhook_id)
+    time.sleep(0.5)
     log.append(f'add_webhook: webhook_id={webhook_id}, timestamp={datetime.datetime.now().isoformat()}')
     return {"webhook_url": URL + '/webhook/' + webhook_id, "webhook_view_url": URL + '/webhook/view/' + webhook_id}
 
